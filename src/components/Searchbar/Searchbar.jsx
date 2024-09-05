@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CiSearch } from "react-icons/ci";
 
-import {SearchbarContainer, SearchForm, SearchFormBtn, SearchFormBtnLabel, SearchFormInput} from './Searchbar.styled';
+import {SearchbarContainer, SearchForm, SearchFormBtn, SearchFormInput} from './Searchbar.styled';
 
 export default class Searchbar extends Component {
 	state={

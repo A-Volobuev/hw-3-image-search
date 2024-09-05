@@ -72,7 +72,7 @@ export default class App extends Component {
   };
 
   render() {
-    const {hits, status, totalHits, isToastShow, page, per_page, isModalOpen, largeImage} = this.state;
+    const {hits, status, totalHits, page, per_page, isModalOpen, largeImage} = this.state;
     return (
       <AppContainer>
         <Searchbar  onSubmit={this.handlFormSubmit}/>
