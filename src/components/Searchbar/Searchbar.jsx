@@ -26,7 +26,7 @@ export default class Searchbar extends Component {
 		//! Здесь мы вызываем пропс и передаем данные запроса в Апп 
 		this.props.onSubmit(this.state.searchQuery);
 
-		this.setState({ searchQuery: ''});
+		// this.setState({ searchQuery: ''});
 	}
 
 	render() {

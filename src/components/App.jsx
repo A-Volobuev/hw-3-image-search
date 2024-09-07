@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { MagnifyingGlass } from 'react-loader-spinner';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import {AppContainer, LoadMoreBtn} from './App.styled.jsx';
 import Searchbar from './Searchbar/Searchbar';
@@ -45,7 +45,10 @@ export default class App extends Component {
       .then(res => {
         const { hits, totalHits } = res;
         this.setState(prevState => ({
-          hits,
+          //! Проверяем, если ввели новый запрос - заменяем и распыляем, если нет, тогда добавляем
+          hits: prevName !== searchQuery
+            ? [...hits]
+            : [...prevState.hits, ...hits],
           totalHits,
           status: 'resolved',
         }));
@@ -54,7 +57,7 @@ export default class App extends Component {
     }
   };
 
-  onLoadMore = () => {
+  onLoadMore = (e) => {
     this.setState(prevState => ({page: prevState.page +1}));
   };
 
@@ -76,6 +79,13 @@ export default class App extends Component {
     return (
       <AppContainer>
         <Searchbar  onSubmit={this.handlFormSubmit}/>
+
+        {/* Рендерим только если нашли */}
+        {/* {status==="resolved" && (<ImageGallery 
+        hits={hits}
+        onClick={this.toggleModal}
+        setLargeImage={this.setLargeImage}/>)} */}
+
         <ImageGallery 
         hits={hits}
         onClick={this.toggleModal}
@@ -93,17 +103,18 @@ export default class App extends Component {
           color="#303f9f"/>
         )}
 
+{/* Если здесь добавляю  toast.info('По вашему запросу ничего не найдено'), то оно вызывается оч много раз, по этому оставлю просто надпись  И цифры судя по всему были именно от уведомления*/}
         {totalHits === 0 && (
-          toast.error('Введите поисковой запрос')
+          <div>По вашему запросу ничего не найдено</div>
         )}
 
-        {totalHits - (page * per_page) > per_page && (
-          <LoadMoreBtn onClick={this.onLoadMore}>Load More</LoadMoreBtn>)}
+        {totalHits - page * per_page > per_page && (
+          <LoadMoreBtn type='button' onClick={this.onLoadMore}>Load More</LoadMoreBtn>)}
 
         {isModalOpen && <Modal onClose={this.toggleModal} 
         hits={largeImage}/>}
 
-        <ToastContainer autoClose={3000} limit={1}/>
+        <ToastContainer autoClose={3000} />
       </AppContainer>
     )
   }
