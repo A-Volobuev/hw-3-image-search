@@ -38,6 +38,9 @@ export default class App extends Component {
 
     if(prevName !== searchQuery || prevPage !== page){
       this.setState({status: "pending"});
+      if(prevName !== searchQuery){
+        this.setState({hits:[], page: 1});
+      }
       // console.log(prevName);
       // console.log(searchQuery);
       pixabayAPI
